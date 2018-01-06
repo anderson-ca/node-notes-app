@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const os = require('os');
 
-let user = os.userInfo;
+let user = os.userInfo();
 
 
 fs.appendFile('greeting.txt', `Hello ${user.username}!`, function (err) {
