@@ -10,9 +10,13 @@ const os = require('os');
 // exporting functionality from a file created by myself by using require and passing a absolute path as a argument. Giving me access to methods inside notes.js
 const notes = require('./notes.js');
 
+// lodash is a third party module exported through npm, located inside the package.json file. Lodash is a toolkit of javascript functions that provides clean methods for manipulating objects and collections.
+const _ = require('lodash');
+
+// assign userInfo to a variable called user. UserInfo is a method that belongs to the os module, which returns information abbout the current user.
 let user = os.userInfo();
 
-
+// method that belongs to the fs module, which appends new information toa file. the mathods takes three arguments.
 fs.appendFile('greeting.txt', `Hello ${user.username}!`, function (err) {
         if (err) {
             console.log('Unable to write to file.');
@@ -20,4 +24,27 @@ fs.appendFile('greeting.txt', `Hello ${user.username}!`, function (err) {
     }
 );
 
-console.log(user.username);
+// assign the return form the addNotes method inside the notes module(file) to the result variable.
+let result = notes.addNotes();
+
+// assign the return form the add method inside the notes module(file) to the result variable.
+let addition = notes.add(2, 2);
+
+// testing out lodash array methods.
+let uniqArray = _.uniq(['Anderson', 1, 2, 2, 1, 5, 4, 5, 'Anderson']);
+
+// console logging each result.
+console.log(addition);
+
+console.log(result);
+
+console.log(module);
+
+console.log(_.isString(true));
+
+console.log(_.isString('Anderson'));
+
+console.log(uniqArray);
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
