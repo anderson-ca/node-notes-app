@@ -8,9 +8,6 @@ console.log('starting app.js...');
 // fs (file system) built-in module. used for I/O file operations. It has both synchronous and asynchronous forms.
 const fs = require('fs');
 
-// os (operating system) build-in module used for operating system related tasks.
-const os = require('os');
-
 ///////////////////////////////////////////////
 ///////////  Modules I have written ///////////
 ///////////////////////////////////////////////
@@ -25,42 +22,52 @@ const notes = require('./notes.js');
 // lodash is a third party module exported through npm, located inside the package.json file. Lodash is a toolkit of javascript functions that provides clean methods for manipulating objects and collections.
 const _ = require('lodash');
 
+// yargs is a module used to build interactive command line tools by persing arguments and generating an elegant user interface.
+const yargs = require('yargs');
+
+let argv = yargs.argv;
+
 ///////////////////////////////////////////////
-//////////// Playing with Modules /////////////
+///////////// Getting User Input //////////////
 ///////////////////////////////////////////////
 
-// assign userInfo to a variable called user. UserInfo is a method that belongs to the os module, which returns information abbout the current user.
-let user = os.userInfo();
+// the argv(arguments vector) is an attribute that belongs to the process object. argv returns an array of arguments passed when the Node.js process was launched.
+console.log(process.argv);
 
-// method that belongs to the fs module, which appends new information toa file. the mathods takes three arguments.
-fs.appendFile('greeting.txt', `Hello ${user.username}!`, function (err) {
-        if (err) {
-            console.log('Unable to write to file.');
-        }
-    }
-);
+let UserCommand = process.argv[2];
 
-// assign the return form the addNotes method inside the notes module(file) to the result variable.
-let result = notes.addNotes();
+console.log('Command: ', UserCommand);
 
-// assign the return form the add method inside the notes module(file) to the result variable.
-let addition = notes.add(2, 2);
+console.log('Process ', process.argv);
 
-// testing out lodash array methods.
-let uniqArray = _.uniq(['Ilaha', 1, 2, 2, 1, 5, 4, 5, 'Anderson']);
+console.log('Yargs ', argv);
 
-// console logging each result.
-console.log(addition);
 
-console.log(result);
-
-console.log(module);
-
-console.log(_.isString(true));
-
-console.log(_.isString('Anderson'));
-
-console.log(uniqArray);
 ///////////////////////////////////////////////
+//////////// Conditional Output  //////////////
 ///////////////////////////////////////////////
-///////////////////////////////////////////////
+
+if (UserCommand === 'add') {
+
+    notes.addNote(argv.title, argv.body);
+
+} else if (UserCommand === 'read') {
+
+    console.log('Retrieving individual note...');
+
+} else if (UserCommand === 'list') {
+
+    console.log('Listing all notes...');
+
+} else if (UserCommand === 'remove') {
+
+    console.log('Removing note...');
+
+} else {
+
+    console.log('Command not recognized');
+
+}
+
+
+
