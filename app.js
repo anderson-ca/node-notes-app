@@ -34,11 +34,9 @@ let argv = yargs.argv;
 // the argv(arguments vector) is an attribute that belongs to the process object. argv returns an array of arguments passed when the Node.js process was launched.
 console.log(process.argv);
 
-let UserCommand = process.argv[2];
+let UserCommand = argv._[0];
 
 console.log('Command: ', UserCommand);
-
-console.log('Process ', process.argv);
 
 console.log('Yargs ', argv);
 
@@ -53,15 +51,15 @@ if (UserCommand === 'add') {
 
 } else if (UserCommand === 'read') {
 
-    console.log('Retrieving individual note...');
+    notes.getNote(argv.title);
 
 } else if (UserCommand === 'list') {
 
-    console.log('Listing all notes...');
+     notes.getAll(argv.title);
 
 } else if (UserCommand === 'remove') {
 
-    console.log('Removing note...');
+    notes.remove(argv.title);
 
 } else {
 
