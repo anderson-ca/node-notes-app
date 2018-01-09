@@ -1,23 +1,11 @@
 'use strict';
 console.log('starting notes.js...');
-
-
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-///////////////////////////////////////////////
 let fs = require('fs');
 
-// add note method
-let addNote = (title, body) => {
-
-    // create empty array to store note objects.
-    let notes = [];
-
-    // declare a note object with title, and body attribute. Assign the         argument from the addNote method as values for the keys inside the         object.
-    let note = {
-        title,
-        body
-    };
+///////////////////////////////////////////////
+////////////// Reusable Methods ///////////////
+///////////////////////////////////////////////
+let fetchNotes = () => {
 
     // create try/catch in order to avoid stack-trace error. in case the        notes-data.json file doesn't exist or data inside the file is             corrupted.
     try {
@@ -26,11 +14,38 @@ let addNote = (title, body) => {
         let notesString = fs.readFileSync('notes-data.json');
 
         // parse string object to a plain js object, and assign it to               previously created notes array.
-        notes = JSON.parse(notesString);
+        return JSON.parse(notesString);
 
     } catch (e) {
 
+        return [];
+
     }
+
+};
+
+let saveNotes = (notes) => {
+
+    fs.writeFileSync('notes-data.json', JSON.stringify(notes))
+
+
+};
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+
+// add note method
+let addNote = (title, body) => {
+
+    // create empty array to store note objects.
+    let notes = fetchNotes();
+
+    // declare a note object with title, and body attribute. Assign the         argument from the addNote method as values for the keys inside the         object.
+    let note = {
+        title,
+        body
+    };
 
     // verify the user input is not duplicated by filtering duplicated          input to duplicateNotes array. Filter is an array method that takes       a callback function.
     let duplicatedNotes = notes.filter((note) => {
@@ -44,8 +59,13 @@ let addNote = (title, body) => {
 
         notes.push(note);
 
-        fs.writeFileSync('notes-data.json', JSON.stringify(notes))
+        saveNotes(notes);
 
+        console.log(note.title ,'added to notes.');
+        return note;
+
+    } else {
+        console.log('Title already in use!');
     }
 
 };

@@ -47,7 +47,7 @@ console.log('Yargs ', argv);
 
 if (UserCommand === 'add') {
 
-    notes.addNote(argv.title, argv.body);
+    let note = notes.addNote(argv.title, argv.body);
 
 } else if (UserCommand === 'read') {
 
