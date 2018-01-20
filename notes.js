@@ -1,10 +1,13 @@
 'use strict';
 console.log('starting notes.js...');
 let fs = require('fs');
+let _ = require('lodash');
 
 ///////////////////////////////////////////////
 ////////////// Reusable Methods ///////////////
 ///////////////////////////////////////////////
+
+////////////////////////
 let fetchNotes = () => {
 
     // create try/catch in order to avoid stack-trace error. in case the        notes-data.json file doesn't exist or data inside the file is             corrupted.
@@ -24,10 +27,27 @@ let fetchNotes = () => {
 
 };
 
+//////////////////////////
 let saveNotes = (notes) => {
 
     fs.writeFileSync('notes-data.json', JSON.stringify(notes))
 
+
+};
+
+//////////////////////////
+let getNoteByTitle = (title) => {
+    let notes = fetchNotes();
+
+    notes = notes.filter((note) => {
+         if(note.title === title) {
+             return note;
+         }
+    });
+
+    let note = notes[0];
+
+    return note;
 
 };
 
@@ -61,7 +81,7 @@ let addNote = (title, body) => {
 
         saveNotes(notes);
 
-        console.log(note.title ,'added to notes.');
+        console.log(note.title, 'added to notes.');
         return note;
 
     } else {
@@ -77,12 +97,26 @@ let getAll = () => {
 
 // retrieve individual note
 let getNote = (title) => {
-    console.log('Retrieved note:', title);
+
+    return getNoteByTitle(title);
+
 };
 
 // remove note
 let remove = (title) => {
-    console.log(title, 'removed from notes');
+
+    let notesList = fetchNotes();
+
+    let notesRemove = notesList.filter((note) => {
+
+        return note.title !== title;
+
+    });
+
+    saveNotes(notesRemove);
+
+    return notesList.length !== notesRemove.length;
+
 };
 
 module.exports = {
