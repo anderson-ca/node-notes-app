@@ -38,6 +38,8 @@ let note = JSON.parse(noteString);
 
 console.log(typeof note);
 
+debugger;
+
 console.log(note.title);
 
 

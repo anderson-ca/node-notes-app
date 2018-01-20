@@ -8,6 +8,7 @@ console.log('starting app.js...');
 // fs (file system) built-in module. used for I/O file operations. It has both synchronous and asynchronous forms.
 const fs = require('fs');
 
+debugger;
 ///////////////////////////////////////////////
 ///////////  Modules I have written ///////////
 ///////////////////////////////////////////////
@@ -49,26 +50,32 @@ if (UserCommand === 'add') {
 
     let note = notes.addNote(argv.title, argv.body);
 
+    notes.logNote(note);
+
 } else if (UserCommand === 'read') {
 
     let note = notes.getNote(argv.title);
 
-    console.log('---------------------');
-    console.log(note.title);
-    console.log(note.body);
+    if (note) {
+
+        notes.logNote(note);
+
+    } else {
+        console.log('Note not found');
+    }
 
 
 } else if (UserCommand === 'list') {
 
-     notes.getAll(argv.title);
+    notes.getAll();
 
 } else if (UserCommand === 'remove') {
 
     let noteRemoved = notes.remove(argv.title);
 
-     let result = noteRemoved ? argv.title + ' was removed from notes':'Note not found';
+    let result = noteRemoved ? argv.title + ' was removed from notes' : 'Note not found';
 
-     console.log(result);
+    console.log(result);
 
 } else {
 
