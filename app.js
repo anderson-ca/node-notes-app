@@ -2,6 +2,22 @@
 console.log('starting app.js...');
 
 ///////////////////////////////////////////////
+///////////// Title and Body objs /////////////
+///////////////////////////////////////////////
+let title = {
+    describe: 'Title of note',
+    demand: true,
+    alias: 't'
+};
+
+let body = {
+    describe: 'Body of note',
+    demand: true,
+    alias: 'b'
+};
+
+
+///////////////////////////////////////////////
 /////////////// Node.js Modules ///////////////
 ///////////////////////////////////////////////
 
@@ -25,7 +41,15 @@ const _ = require('lodash');
 // yargs is a module used to build interactive command line tools by persing arguments and generating an elegant user interface.
 const yargs = require('yargs');
 
-let argv = yargs.argv;
+let argv = yargs.command('add', 'Add new note', {
+    title,
+    body
+}).command('list', 'List all notes').command('read', 'Read a note', {
+    title
+}).command('remove', 'Remove a note', {
+    title
+}).help().argv;
+
 
 ///////////////////////////////////////////////
 ///////////// Getting User Input //////////////
@@ -49,26 +73,32 @@ if (UserCommand === 'add') {
 
     let note = notes.addNote(argv.title, argv.body);
 
+    notes.logNote(note);
+
 } else if (UserCommand === 'read') {
 
     let note = notes.getNote(argv.title);
 
-    console.log('---------------------');
-    console.log(note.title);
-    console.log(note.body);
+    if (note) {
+
+        notes.logNote(note);
+
+    } else {
+        console.log('Note not found');
+    }
 
 
 } else if (UserCommand === 'list') {
 
-     notes.getAll(argv.title);
+    notes.getAll();
 
 } else if (UserCommand === 'remove') {
 
     let noteRemoved = notes.remove(argv.title);
 
-     let result = noteRemoved ? argv.title + ' was removed from notes':'Note not found';
+    let result = noteRemoved ? argv.title + ' was removed from notes' : 'Note not found';
 
-     console.log(result);
+    console.log(result);
 
 } else {
 

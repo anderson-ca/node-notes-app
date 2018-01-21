@@ -40,7 +40,9 @@ let getNoteByTitle = (title) => {
     let notes = fetchNotes();
 
     notes = notes.filter((note) => {
+
          if(note.title === title) {
+
              return note;
          }
     });
@@ -81,7 +83,7 @@ let addNote = (title, body) => {
 
         saveNotes(notes);
 
-        console.log(note.title, 'added to notes.');
+        console.log(note.title, 'added to note.');
         return note;
 
     } else {
@@ -93,6 +95,19 @@ let addNote = (title, body) => {
 // retrieve all notes method
 let getAll = () => {
     console.log('Retrieving all notes...');
+
+    let notes = fetchNotes();
+
+    console.log(`Printing ${notes.length} note(s)...`);
+    console.log('////////////////////////');
+    notes.forEach((note) => {
+
+        console.log(`Title: ${note.title}`);
+        console.log(`Body: ${note.body}`);
+        console.log('-------')
+    });
+
+    return notes;
 };
 
 // retrieve individual note
@@ -119,11 +134,24 @@ let remove = (title) => {
 
 };
 
+// console.log value
+let logNote = (note) => {
+
+    console.log('--------------------');
+    console.log(note.title);
+    console.log(note.body);
+};
+
+
+//////////////////////////////////////////////////
+// EXPORTING METHODS INSIDE NOTE.JS IN THE FORM //
+// AND JS OBJECT /////////////////////////////////
 module.exports = {
     addNote,
     getAll,
     getNote,
-    remove
+    remove,
+    logNote
 };
 
 
