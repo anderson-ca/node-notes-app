@@ -83,7 +83,7 @@ let addNote = (title, body) => {
 
         saveNotes(notes);
 
-        console.log(note.title, 'added to notes.');
+        console.log(note.title, 'added to note.');
         return note;
 
     } else {
@@ -98,12 +98,13 @@ let getAll = () => {
 
     let notes = fetchNotes();
 
-    console.log('---------------------');
+    console.log(`Printing ${notes.length} note(s)...`);
+    console.log('////////////////////////');
     notes.forEach((note) => {
 
         console.log(`Title: ${note.title}`);
         console.log(`Body: ${note.body}`);
-        console.log('=====================')
+        console.log('-------')
     });
 
     return notes;
@@ -135,7 +136,7 @@ let remove = (title) => {
 
 // console.log value
 let logNote = (note) => {
-    debugger;
+
     console.log('--------------------');
     console.log(note.title);
     console.log(note.body);

@@ -2,13 +2,28 @@
 console.log('starting app.js...');
 
 ///////////////////////////////////////////////
+///////////// Title and Body objs /////////////
+///////////////////////////////////////////////
+let title = {
+    describe: 'Title of note',
+    demand: true,
+    alias: 't'
+};
+
+let body = {
+    describe: 'Body of note',
+    demand: true,
+    alias: 'b'
+};
+
+
+///////////////////////////////////////////////
 /////////////// Node.js Modules ///////////////
 ///////////////////////////////////////////////
 
 // fs (file system) built-in module. used for I/O file operations. It has both synchronous and asynchronous forms.
 const fs = require('fs');
 
-debugger;
 ///////////////////////////////////////////////
 ///////////  Modules I have written ///////////
 ///////////////////////////////////////////////
@@ -26,7 +41,15 @@ const _ = require('lodash');
 // yargs is a module used to build interactive command line tools by persing arguments and generating an elegant user interface.
 const yargs = require('yargs');
 
-let argv = yargs.argv;
+let argv = yargs.command('add', 'Add new note', {
+    title,
+    body
+}).command('list', 'List all notes').command('read', 'Read a note', {
+    title
+}).command('remove', 'Remove a note', {
+    title
+}).help().argv;
+
 
 ///////////////////////////////////////////////
 ///////////// Getting User Input //////////////
